@@ -11,7 +11,14 @@ Front.contextUpdates.subscribe(context => {
             console.log('No conversation selected');
             break;
         case 'singleConversation':
-            console.log('Selected conversation:', context.conversation);
+            console.log('Event data', context);
+
+            // Set the conversation state.
+            hasConversation = true;
+
+            // Load the Contact information based off of the event data. And set tab to 'Info'.
+            loadContact(context.conversation);
+            showInfo();
             break;
         case 'multiConversations':
             console.log('Multiple conversations selected', context.conversations);
@@ -53,14 +60,14 @@ Front.contextUpdates.subscribe(context => {
 // This will call our mocked CRM service for data and then add the contact information and notes to the page.
 async function loadContact(contact) {
     // Display Front contact info.
-    displayContactInfo(contact.display_name || contact.handle, contact.handle);
+    displayContactInfo(contact.subject, contact.recipient);
 
     // Build and display our CRM data.
-    const crmData = await mockQueryCRM(contact.handle);
-    displayCRMInfo(crmData.info.id, crmData.info.location, crmData.info.status);
+    // const crmData = await mockQueryCRM(contact.handle);
+    // displayCRMInfo(crmData.info.id, crmData.info.location, crmData.info.status);
 
-    //  Load the notes from our CRM data.
-    displayNotes(crmData.notes);
+    // //  Load the notes from our CRM data.
+    // displayNotes(crmData.notes);
 }
 
 // Asynchronously create another note through our mocked CRM service to add to the list.
