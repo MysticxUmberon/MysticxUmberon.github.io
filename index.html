@@ -1,73 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script type="text/javascript" src="https://dl.frontapp.com/libs/plugin-sdk-1.0.1.min.js"></script>
-    <script>
-        let hasConversation;
-        Front.contextUpdates.subscribe('conversation', function (context) {
-            console.log('Event Data: ', context);
-
-            hasConversation = true;
-
-            loadContactData(context.contact);
-        });
-
-        async function loadContactData(contact) {
-            displayContactInfo(contact.display_name || contact.handle, contact.handle);
-        }
-
-        // Displays Front contact information.
-        function displayContactInfo(display_name = "No Contact", handle = "-") {
-            const nameElement = document.getElementById("name");
-            const handleElement = document.getElementById("handle");
-
-            nameElement.textContent = display_name;
-            handleElement.textContent = handle;
-        }
-
-        function getSelectedText() {
-            var selectedText = '';
-
-            // window.getSelection 
-            if (window.getSelection) {
-                selectedText = window.getSelection();
-            }
-            // document.getSelection 
-            else if (document.getSelection) {
-                selectedText = document.getSelection();
-            }
-            // document.selection 
-            else if (document.selection) {
-                selectedText =
-                    document.selection.createRange().text;
-            } else return;
-            // To write the selected text into the textarea 
-            document.testform.selectedtext.value = selectedText;
-        }
-    </script>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script type="text/javascript" src="https://dl.frontapp.com/libs/frontjs.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="mockCRM.js"></script>
 </head>
 
 <body>
-    <center>
-        <p>Select any part of this sentence
-            and press the button</p>
-        <span id="name"></span>
-        <span id="handle">-</span>
+    <div class="plugin-div">
+        <span id="name" class="font name"></span>
+        <span id="handle" class="font handle">-</span>
 
-        <!--Button to invoke the  
-         function to get the selected text-->
-        <input type="button" value="Get Selection" onmousedown="getSelectedText()">
+        <div class="navButtonRow width100percent">
+            <div id="infoButton" class="font navButton" onClick="showInfo()">Info</div>
+            <div id="notesButton" class="font navButton" onClick="showNotes()">Notes</div>
+        </div>
 
-        <!--Form to show the selected text as output-->
-        <form name="testform">
-            <textarea name="selectedtext" rows="5" cols="20"></textarea>
-        </form>
-    </center>
+        <div id="infoSection" class="width100percent">
+            <div class="column">
+                <div class="row">
+                    <div class="rowItem infoKey font">Id</div>
+                    <div class="rowItem infoValue font" id="id"></div>
+                </div>
 
+                <div class="row">
+                    <div class="rowItem infoKey font">Location</div>
+                    <div class="rowItem infoValue font" id="location"></div>
+                </div>
+
+                <div class="row">
+                    <div class="rowItem infoKey font">Status</div>
+                    <div class="rowItem infoValue font" id="status"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="notesSection" class="width100percent displayNone">
+            <div class="column">
+                <button class="newNote font" onClick="createNote()">+ New Note</button>
+                <div class="column" id="notes"></div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
