@@ -7,22 +7,28 @@
     <title>Document</title>
     <script type="text/javascript" src="https://dl.frontapp.com/libs/frontjs.min.js"></script>
     <script>
-        Front.contextUpdates.subscribe(context => {
-            switch (context.type) {
-                case 'noConversation':
-                    console.log('No conversation selected');
-                    break;
-                case 'singleConversation':
-                    console.log('Selected conversation:', context.conversation);
-                    break;
-                case 'multiConversations':
-                    console.log('Multiple conversations selected', context.conversations);
-                    break;
-                default:
-                    console.error(`Unsupported context type: ${context.type}`);
-                    break;
-            }
-        })
+        let hasConversation;
+        Front.on('conversation', function (data) {
+            console.log('Event Data: ', data);
+
+            hasConversation = true;
+
+            loadData(data.contact);
+        });
+
+        async function loadContactData(contact) {
+            displayContactInfo(contact.display_name || contact.handle, contact.handle);
+        }
+
+        // Displays Front contact information.
+        function displayContactInfo(display_name = "No Contact", handle = "-") {
+            const nameElement = document.getElementById("name");
+            const handleElement = document.getElementById("handle");
+
+            nameElement.textContent = display_name;
+            handleElement.textContent = handle;
+        }
+
         function getSelectedText() {
             var selectedText = '';
 
@@ -49,6 +55,8 @@
     <center>
         <p>Select any part of this sentence
             and press the button</p>
+        <span id="name"></span>
+        <span id="handle">-</span>
 
         <!--Button to invoke the  
          function to get the selected text-->
