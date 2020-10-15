@@ -5,31 +5,49 @@
 // This keeps track of if Front has returned a conversation to the plugin.
 let hasConversation;
 
+Front.contextUpdates.subscribe(context => {
+    switch (context.type) {
+        case 'noConversation':
+            console.log('No conversation selected');
+            break;
+        case 'singleConversation':
+            console.log('Selected conversation:', context.conversation);
+            break;
+        case 'multiConversations':
+            console.log('Multiple conversations selected', context.conversations);
+            break;
+        default:
+            console.error(`Unsupported context type: ${context.type}`);
+            break;
+    }
+}
+})
+
 // Listen for the `conversation` event from Front and print its contents, then load the contact to the plugin.
-Front.contextUpdates.subscribe('conversation', function (data) {
-    console.log('Event data', data);
+// Front.contextUpdates.subscribe('conversation', function (data) {
+//     console.log('Event data', data);
 
-    // Set the conversation state.
-    hasConversation = true;
+//     // Set the conversation state.
+//     hasConversation = true;
 
-    // Load the Contact information based off of the event data. And set tab to 'Info'.
-    loadContact(data.contact);
-    showInfo();
-});
+//     // Load the Contact information based off of the event data. And set tab to 'Info'.
+//     loadContact(data.contact);
+//     showInfo();
+// });
 
 // Listen for the `no_conversation` event.  This can happen when opened to Inbox Zero.
-Front.contextUpdates.subscribe('no_conversation', function () {
-    console.log('No conversation');
+// Front.contextUpdates.subscribe('no_conversation', function () {
+//     console.log('No conversation');
 
-    // Set the conversation state.
-    hasConversation = false;
+//     // Set the conversation state.
+//     hasConversation = false;
 
-    // Display `No Contact` data and clear the notes and set the tab to 'Info'.
-    displayContactInfo();
-    displayCRMInfo();
-    clearNotes();
-    showInfo();
-});
+//     // Display `No Contact` data and clear the notes and set the tab to 'Info'.
+//     displayContactInfo();
+//     displayCRMInfo();
+//     clearNotes();
+//     showInfo();
+// });
 
 // Asynchronously loads the contact through our mocked CRM service once the body of the plugin is loaded.
 // This will call our mocked CRM service for data and then add the contact information and notes to the page.
