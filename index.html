@@ -5,50 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="text/javascript" src="https://dl.frontapp.com/libs/plugin-sdk-1.0.1.min.js"></script>
-    <script>
-        let hasConversation;
-        Front.on('conversation', function (data) {
-            console.log('Event Data: ', data);
+    <script type="text/javascript" src="https://dl.frontapp.com/libs/frontjs.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
 
-            hasConversation = true;
-
-            loadContactData(data.contact);
-        });
-
-        async function loadContactData(contact) {
-            displayContactInfo(contact.display_name || contact.handle, contact.handle);
-        }
-
-        // Displays Front contact information.
-        function displayContactInfo(display_name = "No Contact", handle = "-") {
-            const nameElement = document.getElementById("name");
-            const handleElement = document.getElementById("handle");
-
-            nameElement.textContent = display_name;
-            handleElement.textContent = handle;
-        }
-
-        function getSelectedText() {
-            var selectedText = '';
-
-            // window.getSelection 
-            if (window.getSelection) {
-                selectedText = window.getSelection();
-            }
-            // document.getSelection 
-            else if (document.getSelection) {
-                selectedText = document.getSelection();
-            }
-            // document.selection 
-            else if (document.selection) {
-                selectedText =
-                    document.selection.createRange().text;
-            } else return;
-            // To write the selected text into the textarea 
-            document.testform.selectedtext.value = selectedText;
-        }
-    </script>
 </head>
 
 <body>
