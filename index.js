@@ -6,7 +6,7 @@
 let hasConversation;
 
 // Listen for the `conversation` event from Front and print its contents, then load the contact to the plugin.
-Front.on('conversation', function (data) {
+Front.contextUpdates.subscribe('conversation', function (data) {
     console.log('Event data', data);
 
     // Set the conversation state.
@@ -18,7 +18,7 @@ Front.on('conversation', function (data) {
 });
 
 // Listen for the `no_conversation` event.  This can happen when opened to Inbox Zero.
-Front.on('no_conversation', function () {
+Front.contextUpdates.subscribe('no_conversation', function () {
     console.log('No conversation');
 
     // Set the conversation state.
