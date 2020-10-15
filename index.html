@@ -8,12 +8,12 @@
     <script type="text/javascript" src="https://dl.frontapp.com/libs/plugin-sdk-1.0.1.min.js"></script>
     <script>
         let hasConversation;
-        Front.on('conversation', function (data) {
-            console.log('Event Data: ', data);
+        Front.contextUpdates.subscribe('conversation', function (context) {
+            console.log('Event Data: ', context);
 
             hasConversation = true;
 
-            loadContactData(data.contact);
+            loadContactData(context.contact);
         });
 
         async function loadContactData(contact) {
