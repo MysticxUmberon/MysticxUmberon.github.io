@@ -56,6 +56,11 @@ Front.contextUpdates.subscribe(context => {
 //     showInfo();
 // });
 
+// Asynchronously loads the conversation
+async function loadConversation(conversation) {
+    displayConversationInfo(conversation.subject, conversation.recipient.name);
+}
+
 // Asynchronously loads the contact through our mocked CRM service once the body of the plugin is loaded.
 // This will call our mocked CRM service for data and then add the contact information and notes to the page.
 async function loadContact(contact) {
@@ -79,6 +84,14 @@ async function createNote() {
 
     const note = await mockPostNote();
     displayNote(note);
+}
+
+function displayConversationInfo(subject = "No Subject", recipient = "") {
+    const nameElement = document.getElementById("name");
+    const handleElement = document.getElementById("handle");
+
+    nameElement.textContent = subject;
+    handleElement.textContent = recipient;
 }
 
 // Displays Front contact information.
