@@ -27,7 +27,6 @@ Front.contextUpdates.subscribe(context => {
             console.error(`Unsupported context type: ${context.type}`);
             break;
     }
-}
 })
 
 // Listen for the `conversation` event from Front and print its contents, then load the contact to the plugin.
