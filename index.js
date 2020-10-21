@@ -16,6 +16,7 @@ Front.contextUpdates.subscribe(context => {
             // Set the conversation state.
             hasConversation = true;
 
+            loadConversation(context.conversation);
             // Load the Contact information based off of the event data. And set tab to 'Info'.
             loadContact(context.contact);
             showInfo();
